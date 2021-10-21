@@ -1,0 +1,29 @@
+<div class="collapse navbar-collapse" id="navTableOfContents">
+  <div class="navbar-nav flex-column">
+    <ul class="no-bullets">
+          {% if site.data.toc.toc_development[0] %}
+            {% for item in site.data.toc.toc_development %}
+            <li class="nav-item">
+              <a class="text-wrap collapsed" href="{{ baseurl_rel }}{{ item.url }}">{{ item.title }}</a>
+                {% if item.subfolderitems[0] %}
+                  <ul class="no-bullets">
+                    {% for entry in item.subfolderitems %}
+                        <li class="nav-item">
+                          <a href="{{ baseurl_rel }}{{ entry.url }}">{{ entry.page }}</a>
+                          {% if entry.subsubfolderitems[0] %}
+                            <ul class="no-bullets">
+                            {% for subentry in entry.subsubfolderitems %}
+                                <li><a href="{{ baseurl_rel }}{{ subentry.url }}">{{ subentry.page }}</a></li>
+                            {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+              {% endfor %}
+          {% endif %}
+      </ul>
+    </div>
+  </div>
