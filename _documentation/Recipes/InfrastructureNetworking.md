@@ -60,4 +60,4 @@ In the target it needs to be capable to hotplug or enable a device based on entr
 
 # Build Script #
 
-Find more information on how to build this [here](https://github.com/ipdk-io/ovs/blob/ovs-with-p4/Documentation/intro/install/ovs-with-p4-general.rst).
+Find more information on how to build this [here](https://github.com/ipdk-io/ipdk/blob/main/build/IPDK_Container/README "IPDK Container").
