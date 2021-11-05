@@ -1,4 +1,4 @@
 ---
 layout: blog
-title: Infrastructure Programmer Development Kit Blog
+title: IPDK News
 ---

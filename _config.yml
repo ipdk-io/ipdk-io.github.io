@@ -21,6 +21,9 @@ boxes:
   - title: community
     title-cn: 社区
     url: /community/
+  - title: News
+    title-cn: 动态
+    url: /blog/
 
 collections:
   documentation:
