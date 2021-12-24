@@ -26,8 +26,8 @@ toc_documentation:
         url: /documentation/Targets/OakSpringsCanyonIPU
       - page: Tofino-based Intelligent Switch 
         url: /documentation/Targets/TofinoSwitch
-- title: Acronyms Glossary
-     url: /documentation/Acronyms
+  - title: Acronyms Glossary
+    url: /documentation/Acronyms
 
 toc_development:
   - title: License
