@@ -28,9 +28,16 @@ toc_documentation:
         url: /documentation/Targets/TofinoSwitch
 
 toc_development:
-  - title: Common Vulnerabilities and Exposures (CVE) Process
-    url: /development/#cve
   - title: License
     url: /development/#license
   - title: Source Code
     url: /development/#source_code
+  - title: Contributing
+    url: /development/#contributing
+  - title: Development Guidelines
+    url: /development/#guidelines
+  - title: Core Maintainers
+    url: /development/#core
+  - title: Common Vulnerabilities and Exposures (CVE) Process
+    url: /development/#cve
+
