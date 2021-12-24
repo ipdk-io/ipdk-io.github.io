@@ -4,7 +4,7 @@ layout: documentation
 visibility: public
 ---
 
-<table class="wrapped">
+<table class="wrapped" border="1">
   <colgroup>
     <col/>
     <col/>
