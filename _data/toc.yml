@@ -1,11 +1,11 @@
 toc_documentation:
-  - title: Interfaces 
-     url: /documentation/Interfaces
-     subfolderitems:
-       - page: Infrastructure Application Interface 
-         url: /documentation/Interfaces/InfraApp
-       - page: Target Abstraction Interface 
-         url: /documentation/Interfaces/TargetAbstraction
+#  - title: Interfaces 
+#    url: /documentation/Interfaces
+#    subfolderitems:
+#      - page: Infrastructure Application Interface 
+#        url: /documentation/Interfaces/InfraApp
+#      - page: Target Abstraction Interface 
+#        url: /documentation/Interfaces/TargetAbstraction
   - title: Recipes
     url: /documentation/Recipes
     subfolderitems:
