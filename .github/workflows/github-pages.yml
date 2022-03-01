@@ -1,4 +1,4 @@
-name: build IPDK site with jekyll and deploy on github pages
+name: build IPDK site
 
 on:
   push:
@@ -31,6 +31,7 @@ jobs:
       # use actions-gh-pages to deploy
       # https://github.com/peaceiris/actions-gh-pages
       - name: Deploy
+        if: github.event_name != 'pull_request'
         uses: peaceiris/actions-gh-pages@v3
         with:
           # GITHUB_TOKEN secret is set up automatically
