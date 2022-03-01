@@ -1,9 +1,0 @@
-*~
-*#
-*.#*
-_site
-.sass-cache
-.jekyll
-.jekyll*
-.vscode
-*.css.map

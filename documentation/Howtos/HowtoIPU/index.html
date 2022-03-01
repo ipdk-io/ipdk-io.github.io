@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
+
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="IPDK, or Infrastructure Programmer Development Kit, is an open source, vendor-agnostic framework of drivers and APIs for infrastructure offload and management that runs on a CPU or an IPU.  IPDK runs in Linux and uses a set of well-established tools such as SPDK, DPDK, Quick Assist and P4 to enable network virtualization, storage virtualization, workload provisioning, root-of-trust and offload capabilities found in the platform.  The components within IPDK, already optimized for Xeon servers, provide a common platform across CPUs and IPUs for increasing performance, optimizing resources and securing the infrastructure with an open-source eco-system.
+">
+  <meta name="author" content="TBD">
+
+  <title>HOWTO IPU</title>
+
+  <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+  <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:400,900' type='text/css'>
+  <link rel="stylesheet" href="../../../css/spdk.css">
+  <link rel="stylesheet" href="../../../css/syntax.css">
+
+  <link href="../../../feed.xml" type="application/atom+xml" rel="alternate" title="Atom Feed">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+</head>
+
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-purp px-2">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <a class="navbar-brand" href="../../../" aria-label="IPDK">
+    <img src="../../../img/ipdk_mark_FIN_REV.svg" width="50" alt="Infrastructure Programmer Development Kit" />
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <div class="navbar-nav mr-auto">
+      
+      
+       <a class="nav-link header-link"  
+        href="../../../documentation/">
+        
+        
+        documentation
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../../../development/">
+        
+        
+        development
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../../../community/">
+        
+        
+        community
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../../../blog/">
+        
+        
+        News
+        
+      </a>
+      
+    </div>
+
+    <div class="navbar-nav ml-auto mr-3">
+      <a class="nav-link header-link" href="https://github.com/ipdk-io">
+      <svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+    </div>
+
+  </div>
+
+</nav>
+
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-md-3 border-right border-dark">
+
+          <nav class="navbar navbar-expand-md navbar-light">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navTableOfContents" aria-controls="navTableOfContents" aria-expanded="false" aria-label="Toggle Table of Contents">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navTableOfContents">
+
+              <div class="navbar-nav flex-column">
+		<div class="collapse navbar-collapse" id="navTableOfContents">
+<div class="navbar-nav flex-column">
+  <ul class="no-bullets">
+        
+          
+          <li class="nav-item">
+            <a class="text-wrap collapsed" href="../../../documentation/Recipes">Recipes</a>
+              
+                <ul class="no-bullets">
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Recipes/InfrastructureNetworking">Virtual Networking</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Recipes/VirtualBlockStorage">Virtual Block Storage</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Recipes/PaaSOffloadKubernetes">Kubernetes Offload</a>
+                        
+                      </li>
+                  
+                </ul>
+              
+            </li>
+            
+          <li class="nav-item">
+            <a class="text-wrap collapsed" href="../../../documentation/Targets">Targets</a>
+              
+                <ul class="no-bullets">
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Targets/KVMTargetP4DPDK">KVM Target w/ P4 DPDK</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Targets/MountEvansIPU">Mount Evans IPU</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Targets/OakSpringsCanyonIPU">Oak Springs Canyon IPU</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Targets/TofinoSwitch">Tofino-based Intelligent Switch</a>
+                        
+                      </li>
+                  
+                </ul>
+              
+            </li>
+            
+          <li class="nav-item">
+            <a class="text-wrap collapsed" href="../../../documentation/Acronyms">Acronyms Glossary</a>
+              
+            </li>
+            
+        
+    </ul>
+  </div>
+</div>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <div class="col-md-9 py-3 pl-5">
+
+          <div class="jumbotron">
+            <h1>HOWTO IPU</h1>
+          </div>
+
+          <div class="content"><p>In order to start to migrating Infrastructure Applications off of the host and onto the IPU there are a few necasary steps. There are also a couple of optional steps that help you scale your applications and get more out of this new type of device.</p>
+
+<h2 id="required-steps">Required Steps:</h2>
+<ul>
+  <li><a href="#Choose_Your_IPU_Operating_System">Choose Your IPU Operating System</a></li>
+  <li><a href="#Define_How_Your_IPU_Is_Secured">Define How Your IPU is Secured</a></li>
+  <li><a href="#Define_Your_IPUs_Deployment_Lifecycle">Define Your IPU’s Deployment Lifecycle</a></li>
+  <li><a href="#Define_Your_Host_Interface">Define Your Host Interface</a></li>
+  <li><a href="#Start_Porting_Applications">Start Porting Applications</a></li>
+</ul>
+
+<p>An example deployment of an IPU with just the required steps is <a href="#Deployment_Example_Required_Steps_Only">here</a>.</p>
+
+<h2 id="optional-steps">Optional Steps:</h2>
+<ul>
+  <li><a href="#Host_Mgmt_Offload">Host Management Offload</a></li>
+  <li><a href="#Hardware_P4">Hardware P4 Pipeline</a></li>
+  <li><a href="#Network_Crypto">Networking Crypto Offload</a></li>
+  <li><a href="#Storage_Crypto">Storage Crypto</a></li>
+  <li><a href="#TLS_Offload">TLS Offload</a></li>
+  <li><a href="#Compression">Compression Offload</a></li>
+  <li><a href="#Transport_Offload">Transport Offload</a></li>
+  <li><a href="#Power_Management">Power Management</a></li>
+</ul>
+
+<p>An example deployment of an IPU with all of the options enabled is <a href="#Deployment_Example_All_Options">here</a>.</p>
+
+<h1 id="required-steps-1">Required Steps</h1>
+
+<p><a id="Choose_Your_IPU_Operating_System"></a></p>
+<h2 id="choose-your-ipu-operating-system">Choose Your IPU Operating System</h2>
+
+<p>An IPU can be thought of as a special purpose CPU optimized for running infrastructure applications.  Therefore it is likely that the most important decision around bringing IPU into your fleet is determining what OS will run on it.  Most developers deploying IPUs today take one of two paths:</p>
+<ul>
+  <li><strong>Re-use the Host Server’s OS</strong>:  Port the host server’s operating system to IPU, in many cases having the exact same OS in both the host and the IPU.</li>
+  <li><strong>Re-use the Network’s NOS</strong>:  Port the operating system being used in the network switches, in many cases having the exact same NOS in both the top-of-rack switch and the IPUs.</li>
+</ul>
+
+<p>The decision on OS sets the direction on how the IPU is managed, secured, deployed and monitored throughout its lifecycle.  In this way you can add your IPUs into an existing fleet or manage them separately as a new resource group.</p>
+
+<p><a id="Define_How_Your_IPU_Is_Secured"></a></p>
+<h2 id="define-how-your-ipu-is-secured">Define How Your IPU Is Secured</h2>
+
+<p>The IPU can act as a control point on the host platform and as a result usually has a direct connection to a central point of management / orchestration.  By default the IPU trusts nothing- it does not trust the host it is attached to, the boot image it is assigned or input on its network or console interfaces.  In order to connect to this point of management / orchestration in a secure way trust must be established and then preserved during operation.  Key aspects to consider:</p>
+<ul>
+  <li><strong>Root Of Trust</strong>:  How to ensure that only trusted code is executed on the cores inside the IPU.</li>
+  <li><strong>Secure Boot, Update &amp; Recovery</strong>:  Boot image authentication using the root of trust.  The boot image for the IPU can be pulled from a disk local to the IPU or from the network.  Remote image update &amp; recovery ensures remote software delivery without requiring physical interaction with the device.</li>
+  <li><strong>Management Credentials</strong>:  Credentials stored in the boot image to enable a bi-directional secure connection between the central point of management and the IPU.</li>
+  <li><strong>Opaque Keystore</strong>:  A write-only storage of cryptographic keys, each referenced with a handle to be used by different accelerators within the IPU.</li>
+</ul>
+
+<p>The IPU may also act as a proxy for how the host is managed &amp; secured, offloading server management to the IPU.</p>
+
+<p><a id="Define_Your_Host_Interface"></a></p>
+<h2 id="define-your-host-interface">Define Your Host Interface</h2>
+
+<p>A differentiating feature of an IPU is that it is not a peripheral to the host (despite being attached over a system bus like PCI!).  Instead the IPU is going to establish a set of host interfaces (defined in software) of its own choosing that may change and evolve over time.  This provides a level of hardware separation between host apps and the infrastructure that serves it.  Usually the host is unaware that an IPU is physically plugged in over PCI, it can only see these virtual software defined devices on the bus.  How the IPU presents itself to the host is a concept borrowed from hypervisors presenting devices into virtual machines- using the same ‘PCIe hotplug’ common across all modern OSes devices are dynamically added and removed.  To standardize these semantics across KVM software backends and IPU hardware backends IPDK defines a set of <strong>Host Virtual Device APIs</strong> that enable orchestration to insert and remove these virtual devices into the host dynamically.</p>
+
+<ul>
+  <li><strong>Virtual Ports</strong>:  Plug/Unplug a virtual port into the host and set SLAs like the ‘virtual link speed’</li>
+  <li><strong>Virtual Disks</strong>:  Plug/Uplug a virtual disk into the host and set SLAs like the ‘virtual disk max IOPS’</li>
+  <li><strong>Virtual Container Queues</strong>:  Split a virtual port into individual devices that can support a CNI and has hardware queues dedicated to the container pod.</li>
+  <li><strong>Localhost Sockets</strong>:  Establish a raw socket capable of carrying messages to/from the host and Infrastructure applications running on the IPU.</li>
+  <li><strong>Virtual Fabric Ports</strong>:  Plug/Unplug a virtual fabric port that provides a low latency / high bandwidth OFI device connection.</li>
+  <li><strong>Virtual Accelerators</strong>:  Plug/Unplug a virtual accelerator that exposes its own device model such as oneAPI Level Zero.</li>
+</ul>
+
+<p><a id="Define_Your_IPUs_Deployment_Lifecycle"></a></p>
+<h2 id="define-your-ipus-deployment-lifecycle">Define Your IPUs Deployment Lifecycle</h2>
+
+<p>Once your IPU has booted securely and is added to the fleet it has to be tracked, managed, debugged and at some point eventually decommissioned.  All of this must be done without any physical interaction with the card AND in most cases without any interaction from the attached host (host is untrusted by default).  Key aspects to consider:</p>
+<ul>
+  <li><strong>Device ID</strong>:  This IPU’s unique identifier back to the central manager so that it can be added into the fleet and tracked through its lifecycle.</li>
+  <li><strong>Associating Host &lt;-&gt; IPU</strong>:  Determining which host in the fleet this IPU is attached to.</li>
+  <li><strong>Board Management Controller (BMC) Interface</strong>:  Depending on the deployment model the IPU may have its own BMC or share the BMC found on the host motherboard.  In either case this BMC must be remotely reachable even when the IPU’s primary cores are off, in reset or inoperable.  The BMC is also responsible for remotely powering up/down the IPU.</li>
+  <li><strong>IPU &amp; Host Power Up Sequence</strong>:  Often the IPU is booted well before the host and establishes a link with orchestration before the host is started up.  Depending on the form factor the IPU &amp; Host may still share certain platform functions such as power and fans.  This is often sequenced at the management orchestration level.</li>
+  <li><strong>IPU Core Reset, Debug, Core Dump &amp; Telemetry</strong>:  Similar to what is found on the host cores there needs to be capability to be able to remotely reset the IPU cores as well as debug, monitor and track their operation.  Telemetry information and core dumps must be accessible even if the cores cease to function.</li>
+  <li><strong>Network Interface Reset, Debug &amp; Telemetry</strong>:  Similar to what is found on the host networking interfaces there needs to be capability to be able to remotely reset the network interfaces as well as debug, monitor and track their operation.  Telemetry information on the network must be accessible even if the network link ceases to function (using another communication path that doesn’t use the downed link).</li>
+</ul>
+
+<p><a id="Start_Porting_Applications"></a></p>
+<h2 id="start-porting-applications">Start Porting Applications</h2>
+
+<p>The IPDK container comes with a set of applications already ported and interfaced with the APIs needed to create devices on the host and interconnect them with the networking and storage control plane frameworks on the IPU.  These reference applications can be used to get going and start serving up infrastructure.  When porting new applications to IPU it is a new execution environment with different constraints on the type and number of cores, amount of storage, amount of memory and availability of peripherals.  It also has a new set of devices (called <strong>Inverse Devices</strong>) that are used to connect back into the host.  Some things to take into consideration:</p>
+
+<ul>
+  <li><strong>Compiling for IPU Cores</strong>:
+An IPU can come with x86 or ARM-based cores which may require a cross compile.  Your application regression testing will need to be rerun with care given to changes in CPU architecture that could introduce new bugs (endian-ness, vectorization, caching, special instructions, compiler optimizations, etc.).</li>
+  <li><strong>On-board Storage for Apps &amp; Logging</strong>:  Most IPU platforms will attach an SSD for boot, application storage and for logs.  This will likely be less on-board storage than what your application is accustomed to, so care should be taken to ensure that the on-board storage is not overwhelmed over time.  When the storage does inevitably fill up the system should still continue to operate.</li>
+  <li><strong>On-board RAM and Swap Space</strong>:  Infrastructure Applications tend to use large amounts of memory, and the IPU will have less memory than what is in the host.</li>
+  <li><strong>High Speed Ethernet Devices</strong>:  The IPU manages its own 10/25/50/100/200GbE Ethernet ports just like a regular server or switch would, and you can expect the same type of device drivers here on the IPU.  Kernel drivers manage the ports, serdes, MACs, and configuration and are often the same or similar to what you would find on a host or switch system.</li>
+  <li><strong>Management Ethernet Device(s)</strong>:  Most IPU adapter cards or motherboard applications will connect one or more 1G management networking interfaces.</li>
+  <li><strong>Management Console Device(s)</strong>:  Most IPU adapter cards or motherboard applications will connect the IPU core’s console to a connector, often plumbed into the attached BMC.  Some IPUs have secondary management core complexes that have their own consoles and these may also be available on the board or connected through the BMC for debug while in deployment.</li>
+  <li><strong>Inverse Host Devices</strong>:  An inverse host device is a device plugged into the IPU’s operating system and represents traffic coming from the host to the IPU.  They can also be used to send traffic back from the IPU to the host.  They come in two flavors:
+    <ul>
+      <li><strong>Inverse Host Kernel Devices</strong>:  These devices often require IPU specific drivers and come up as devices in the kernel (for example a netdev).  They are also often split up with individual netdevs representing the device on the host where traffic is moving in and out of, similar but not the same as what switchdev provides.  These devices are used to interface with existing kernel control planes such as sending/receiving ARP and DHCP packets to/from instances on the host.</li>
+      <li><strong>Inverse Host Userspace Poll Mode Drivers (PMDs)</strong>:  These devices are running in userspace using the same constructs from DPDK and are used to handle high speed / high event rate dataplane and control plane operations.  In this case the enumeration of what device data is coming to/from is set using custom metadata tags added to the traffic as it moves across the PMD.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><a id="Deployment_Example_Required_Steps_Only"></a></p>
+<h2 id="deployment-example-required-steps-only">Deployment Example (Required Steps Only)</h2>
+
+<p>The Linux distribution from the host is chosen, with the Linux kernel version updated to the minimum version needed to run this OS on the IPU.  The IPU is secured and deployed in the same way as the attached host.  The IPU offers the host virtio-net and virtio-blk devices based on configuration from orchestration, including exposing a virtio-blk boot disk used to boot the host’s OS.</p>
+
+<p>The IPU may have a default network configuration which may include putting the virtio-net ports into the host on a virtual network using tunnels or NAT.  The vSwitch and/or networking dataplane can run on the IPU cores or optionally in a programmable hardware pipeline.  The storage backend supporting the virtio-blk devices would run in software as it did in the host, using SPDK as one possible scenario.</p>
+
+<p>Managing the software running on the IPU would happen over the management plane talking to either the BMC on the IPU card or the System BMC inside the server.  Updating the IPU core’s software, the BMC’s software and the IPU firmware is all done through this path.  Telemetry and crash dump information is also accessible through the same mechanism, and is always on even if the main cores running Infrastructure Apps on the IPU are off or not responsive.</p>
+
+<h1 id="optional-steps-1">Optional Steps</h1>
+
+<p>Migrating apps from CPU to IPU brings a suite of advantages- hardware separation of host and infrastructure apps, IPU control of the host interface, and separation of the software that runs on the host and the IPU, allowing the host to run whatever it needs to serve its business purpose.  It also introduces a new challenge where the Infrastructure Apps need to be efficiently packed into the IPU’s resource footprint.</p>
+
+<p>IPUs contain a set of acceleration functions that are targeted at offloading the logic in the IPU, saving cycles, memory and disk space.  A significant portion of the heavy lifting can be done in specialized programmable processing units in hardware.  In the next sections we show how these accelerators improve performance, reduce IPU power, lower latency and alleviate the constraints around fitting all of your Apps on an IPU compute complex.</p>
+
+<p><a id="Host_Mgmt_Offload"></a></p>
+<h2 id="host-management-offload">Host Management Offload</h2>
+
+<p>The IPU is able to manage what runs on the host to support a bare metal hosting model.  The IPU is able to boot its OS before the host’s and provide either a boot disk or a network boot path that returns the boot image provided by the orchestration layer.</p>
+
+<p>Depending on the form factor the IPU may also have control of the server platform, either in conjunction or in replacement of the System BMC.  This enables controlling server reset, monitoring and security.  Remote access to the server’s console and crash logs can also be facilitated through the IPU in the same way.</p>
+
+<p>During regular operation the IPU will control what network and storage I/O the host sees on its PCI bus.  The <strong>Host Virtual Device APIs</strong> can be used to add and remove devices to the host using similar semantics to how devices are added and deleted using qemu.</p>
+
+<p><a id="Hardware_P4"></a></p>
+<h2 id="hardware-p4-pipeline">Hardware P4 Pipeline</h2>
+
+<p>Target a Hardware-based P4 Pipeline by defining your packet processing pipeline in P4, compile it to your target and replace your software-based pipeline with a hardware implementation.</p>
+
+<p><a id="Network_Crypto"></a></p>
+<h2 id="network-crypto">Network Crypto</h2>
+
+<p>Inline IPsec crypto.</p>
+
+<p><a id="Storage_Crypto"></a></p>
+<h2 id="storage-crypto">Storage Crypto</h2>
+
+<p>Inline AES-XTS storage-at-rest encryption + CRC lookaside offload.  Storage fastpath usage models</p>
+
+<p><a id="TLS_Offload"></a></p>
+<h2 id="tls-offload">TLS Offload</h2>
+
+<p>TLS Record encrypt / decrypt</p>
+
+<p><a id="Compression"></a></p>
+<h2 id="compression-offload">Compression Offload</h2>
+
+<p>Compression of data carried over both the networking and storage datapaths.</p>
+
+<p><a id="Transport_Offload"></a></p>
+<h2 id="transport-offload">Transport Offload</h2>
+
+<p>Hardware based L4 transports with hooks integrated for customizing the congestion control algorithms across the network.</p>
+
+<p><a id="Power_Management"></a></p>
+<h2 id="power-management">Power Management</h2>
+
+<p>Optimize IPU power usage during regular and peak operation by reducing the average power consumption of the IPU as well as gracefully handling the peak power scenarios.</p>
+
+<p><a id="Deployment_Example_All_Options"></a></p>
+<h2 id="deployment-example-all-options-checked">Deployment Example (All Options Checked)</h2>
+
+<p>Same example packet flow from  <strong>IPUs Deployment Lifecycle</strong>.  Networking pipeline compiled in P4 and run in hardware, including inline IPsec.  Storage leverages lookaside offloads.  Infrastructure Apps can a) use TLS offload lookaside b) leverage an optimized L4 transport c) push traffic into the P4 pipeline for networking offload d) apply BKMs around managing power consumption.</p>
+
+</div>
+        </div>
+      </div>
+    </div>
+
+    
+  </body>
+</html>

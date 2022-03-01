@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
+
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="IPDK, or Infrastructure Programmer Development Kit, is an open source, vendor-agnostic framework of drivers and APIs for infrastructure offload and management that runs on a CPU or an IPU.  IPDK runs in Linux and uses a set of well-established tools such as SPDK, DPDK, Quick Assist and P4 to enable network virtualization, storage virtualization, workload provisioning, root-of-trust and offload capabilities found in the platform.  The components within IPDK, already optimized for Xeon servers, provide a common platform across CPUs and IPUs for increasing performance, optimizing resources and securing the infrastructure with an open-source eco-system.
+">
+  <meta name="author" content="TBD">
+
+  <title>IPDK</title>
+
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:400,900' type='text/css'>
+  <link rel="stylesheet" href="../css/spdk.css">
+  <link rel="stylesheet" href="../css/syntax.css">
+
+  <link href="../feed.xml" type="application/atom+xml" rel="alternate" title="Atom Feed">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-purp px-2">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <a class="navbar-brand" href="../" aria-label="IPDK">
+    <img src="../img/ipdk_mark_FIN_REV.svg" width="50" alt="Infrastructure Programmer Development Kit" />
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <div class="navbar-nav mr-auto">
+      
+      
+       <a class="nav-link header-link"  
+        href="../cn/documentation/">
+        
+        
+        文档
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../cn/development/">
+        
+        
+        开发
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../cn/community/">
+        
+        
+        社区
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../cn/blog/">
+        
+        
+        动态
+        
+      </a>
+      
+    </div>
+
+    <div class="navbar-nav ml-auto mr-3">
+      <a class="nav-link header-link" href="https://github.com/ipdk-io">
+      <svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+    </div>
+
+  </div>
+
+</nav>
+
+
+  <div class="masthead" id="content" role="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 order-md-1 mt-3">
+          <h1 class="mb-3"></h1>
+          <center>
+            <img src="../img/ipdk_logo_FIN.svg" alt="Infrastructure Programmer Development Kit"
+              width="100%" />
+          </center>
+          <p class="lead mb-4">
+            Infrastructure Programmer Development Kit (IPDK) is an open source, vendor agnostic framework of drivers and APIs for infrastructure offload and management that runs on a CPU, IPU, DPU or switch. IPDK runs in Linux and uses a set of well-established tools such as SPDK, DPDK and P4 to enable network virtualization, storage virtualization, workload provisioning, root-of-trust and offload capabilities found in the platform. IPDK provides a common platform for increasing performance, optimizing resources and securing the infrastructure as an open source community.<br>
+          </p>
+          <div>
+            <a href="../documentation/" class="btn btn-lg btn-dark mb-3 mr-md-3">Get started</a>
+            <a href="https://github.com/ipdk-io" class="btn btn-lg btn-dark mb-3">GitHub</a>
+          </div>
+        </div>
+        <div class="col-md-6 order-md-2 mt-3">
+          <bR><img src="../img/ipdk-icons.svg" width="100%"><br>
+            <center><br>
+<iframe src="https://calendar.google.com/calendar/embed?height=300&wkst=1&bgcolor=%23df643a&ctz=America%2FLos_Angeles&showPrint=0&showTabs=1&showCalendars=0&mode=AGENDA&showDate=1&showNav=1&showTz=1&showTitle=1&title=IPDK.io%20Calendar&src=a29hdDliOTEyYWhqazBuZmVqaTUydWZhNW9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23
+4285F4" style="border:solid 1px #777" width="100%" height="300" frameborder="0" scrolling="no"></iframe>
+</center><br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="news">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+
+          <section id="blog" class="blog">
+            
+            <div class="blog-section">
+              <a class="text-primary" href="../news/2022/02/22/OPI-Event/">
+                <h2 class="blog-heading text-primary">Open Programmable Infrastructure Event</h2>
+              </a>
+              <div class="blog-author">Feb 22, 2022 • Kyle Mestery</div>
+              <div class="content"><p>We are pleased to announce the Alpha edition of the Open Programmable Infrastructure (OPI) event that will be held virtually on March 15th and March 16th, 2022 from 8am-1:30pm PST.<br />
+This is an exciting opportunity to share in the various community efforts underway to make infrastructure fully programmable across software and hardware devices such as IPUs, DPUs, or switches.  The event schedule and speaker list is provided below.</p>
+ <a class="text-primary"
+                  href="../news/2022/02/22/OPI-Event/">Continue...</a></div>
+            </div>
+            
+            <div class="blog-section">
+              <a class="text-primary" href="../news/2022/01/10/Kubernetes-Infrastructure-Update/">
+                <h2 class="blog-heading text-primary">Kubernetes Dataplane Meeting Moved to Jan 26th</h2>
+              </a>
+              <div class="blog-author">Jan 10, 2022 • Dan Daly</div>
+              <div class="content"><p><strong><em>Update!  Wed Dataplane call moved to Jan 26th.</em></strong> Tuesday Jan 11th meeting will happen tomorrow, the slide deck for the discussion is <a href="https://ipdk.io/documentation/IPDK-io%20-%20Recipes.pdf">here</a>.</p>
+ <a class="text-primary"
+                  href="../news/2022/01/10/Kubernetes-Infrastructure-Update/">Continue...</a></div>
+            </div>
+            
+            <div class="blog-section">
+              <a class="text-primary" href="../news/2021/12/13/Kubernetes-Infrastructure-Discussion/">
+                <h2 class="blog-heading text-primary">Two Meetings on Kubernetes Infrastructure</h2>
+              </a>
+              <div class="blog-author">Dec 13, 2021 • Dan Daly</div>
+              <div class="content"><p><strong><em><a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_NzAwMjMzOTItMzAxZC00MjM4LTgwMjQtNDFkZTYxYTQ1NGZi%40thread.v2/0?context=%7b%22Tid%22%3a%2246c98d88-e344-4ed4-8496-4ed7712e255d%22%2c%22Oid%22%3a%221232290d-c824-4050-a582-15598b1d126b%22%7d">Kubernetes Networking Infrastructure Teams Call</a></em></strong> <a href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=NGxwbDl0aHI3cWYxbDhxdTRkZDJmanQwdmIga29hdDliOTEyYWhqazBuZmVqaTUydWZhNW9AZw&amp;tmsrc=koat9b912ahjk0nfeji52ufa5o%40group.calendar.google.com">Jan 11th @ 8am PT</a> &amp; <strong><em><a href="https://www.google.com/url?q=https://teams.microsoft.com/l/meetup-join/19%253ameeting_NjU0Y2M5MzctZmQ0MS00MGY4LWFjNzctYTkyZDNiOGE3Yzll%2540thread.v2/0?context%3D%257b%2522Tid%2522%253a%252246c98d88-e344-4ed4-8496-4ed7712e255d%2522%252c%2522Oid%2522%253a%25221232290d-c824-4050-a582-15598b1d126b%2522%257d&amp;sa=D&amp;source=calendar&amp;usd=2&amp;usg=AOvVaw1MfmZaQUvuUJ1XC8q9IySN">Kubernetes Dataplane Offload Teams Call</a></em></strong> <a target="_blank" href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=M3NvYzVvY3ZyazU0NHU5dGlmMGZxdHJjNzkga29hdDliOTEyYWhqazBuZmVqaTUydWZhNW9AZw&amp;tmsrc=koat9b912ahjk0nfeji52ufa5o%40group.calendar.google.com">Jan 26th @ 8am PT (New Date)</a></p>
+ <a class="text-primary"
+                  href="../news/2021/12/13/Kubernetes-Infrastructure-Discussion/">Continue...</a></div>
+            </div>
+            
+            <div class="blog-section">
+              <a class="text-primary" href="../news/2021/11/05/P4-Patches-For-OVS/">
+                <h2 class="blog-heading text-primary">P4 Patches for OVS Teams Chat</h2>
+              </a>
+              <div class="blog-author">Nov 5, 2021 • Dan Daly</div>
+              <div class="content"><p>On Monday Nov 15th @ 8am Pacific Time we had a public <a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ODIxZDU1MTgtOTM1Yi00MWEzLTkwZDUtNjdlNzkyYTdhNTNl%40thread.v2/0?context=%7b%22Tid%22%3a%2246c98d88-e344-4ed4-8496-4ed7712e255d%22%2c%22Oid%22%3a%221232290d-c824-4050-a582-15598b1d126b%22%7d">Teams meeting</a> on the patches for OVS, <a href="https://youtu.be/wHrT8_Epfz0">Video Link</a> &amp; <a href="/documentation/Meetings/P4-OVS-Codewalk.pptx">Slides Link</a>.</p>
+ <a class="text-primary"
+                  href="../news/2021/11/05/P4-Patches-For-OVS/">Continue...</a></div>
+            </div>
+            
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

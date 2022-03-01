@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
+
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="IPDK, or Infrastructure Programmer Development Kit, is an open source, vendor-agnostic framework of drivers and APIs for infrastructure offload and management that runs on a CPU or an IPU.  IPDK runs in Linux and uses a set of well-established tools such as SPDK, DPDK, Quick Assist and P4 to enable network virtualization, storage virtualization, workload provisioning, root-of-trust and offload capabilities found in the platform.  The components within IPDK, already optimized for Xeon servers, provide a common platform across CPUs and IPUs for increasing performance, optimizing resources and securing the infrastructure with an open-source eco-system.
+">
+  <meta name="author" content="TBD">
+
+  <title>Virtual Block Storage</title>
+
+  <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+  <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:400,900' type='text/css'>
+  <link rel="stylesheet" href="../../../css/spdk.css">
+  <link rel="stylesheet" href="../../../css/syntax.css">
+
+  <link href="../../../feed.xml" type="application/atom+xml" rel="alternate" title="Atom Feed">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+</head>
+
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-purp px-2">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <a class="navbar-brand" href="../../../" aria-label="IPDK">
+    <img src="../../../img/ipdk_mark_FIN_REV.svg" width="50" alt="Infrastructure Programmer Development Kit" />
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <div class="navbar-nav mr-auto">
+      
+      
+       <a class="nav-link header-link"  
+        href="../../../documentation/">
+        
+        
+        documentation
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../../../development/">
+        
+        
+        development
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../../../community/">
+        
+        
+        community
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../../../blog/">
+        
+        
+        News
+        
+      </a>
+      
+    </div>
+
+    <div class="navbar-nav ml-auto mr-3">
+      <a class="nav-link header-link" href="https://github.com/ipdk-io">
+      <svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+    </div>
+
+  </div>
+
+</nav>
+
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-md-3 border-right border-dark">
+
+          <nav class="navbar navbar-expand-md navbar-light">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navTableOfContents" aria-controls="navTableOfContents" aria-expanded="false" aria-label="Toggle Table of Contents">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navTableOfContents">
+
+              <div class="navbar-nav flex-column">
+		<div class="collapse navbar-collapse" id="navTableOfContents">
+<div class="navbar-nav flex-column">
+  <ul class="no-bullets">
+        
+          
+          <li class="nav-item">
+            <a class="text-wrap collapsed" href="../../../documentation/Recipes">Recipes</a>
+              
+                <ul class="no-bullets">
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Recipes/InfrastructureNetworking">Virtual Networking</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Recipes/VirtualBlockStorage">Virtual Block Storage</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Recipes/PaaSOffloadKubernetes">Kubernetes Offload</a>
+                        
+                      </li>
+                  
+                </ul>
+              
+            </li>
+            
+          <li class="nav-item">
+            <a class="text-wrap collapsed" href="../../../documentation/Targets">Targets</a>
+              
+                <ul class="no-bullets">
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Targets/KVMTargetP4DPDK">KVM Target w/ P4 DPDK</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Targets/MountEvansIPU">Mount Evans IPU</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Targets/OakSpringsCanyonIPU">Oak Springs Canyon IPU</a>
+                        
+                      </li>
+                  
+                      <li class="nav-item">
+                        <a href="../../../documentation/Targets/TofinoSwitch">Tofino-based Intelligent Switch</a>
+                        
+                      </li>
+                  
+                </ul>
+              
+            </li>
+            
+          <li class="nav-item">
+            <a class="text-wrap collapsed" href="../../../documentation/Acronyms">Acronyms Glossary</a>
+              
+            </li>
+            
+        
+    </ul>
+  </div>
+</div>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <div class="col-md-9 py-3 pl-5">
+
+          <div class="jumbotron">
+            <h1>Virtual Block Storage</h1>
+          </div>
+
+          <div class="content"><h1 id="infrastructure-application-interface">Infrastructure Application Interface</h1>
+<p><strong>Virtual Devices</strong>:  Offered to the tenant instance, storage controller device types may
+include:</p>
+<ul>
+  <li>virtio-blk</li>
+  <li>virtio-scsi</li>
+  <li>NVMe</li>
+</ul>
+
+<p><strong>Virtual Device Management</strong>:  Interface to orchestration to hotplug virtual devices into
+instances, or associate a VF with an emulated device in an instance using vDPA.
+In IaaS we want to define a set of generic virtual devices that are offered to the tenant.
+The tenant instance could be a VM or a physical machine (bare metal hosting). In both cases
+the semantics of how a virtual device is ‘added’ to an instance is using PCIe hotplug,
+exactly the same as KVM.</p>
+
+<p>The steps to hotplug a new device is as follows:</p>
+
+<p><img src="../img/IaaS-Storage-Hotplug.png" alt="Hotplug" title="Hotplug" width="90%" /></p>
+
+<ol>
+  <li>Over OpenConfig, create a new virtual storage controller device, specifying the device
+type, number of queues, etc.</li>
+  <li>The storage controller has one or more attached volumes. The maximum number of volumes
+is dependent on the device type. Each volume is associated with an SPDK block device
+(bdev) that implements the actual storage backing the volume.</li>
+  <li>The tenant instance loads the corresponding driver for that device, and can then send
+storage requests to volumes attached to the storage controller that will be processed by
+the SPDK storage application..</li>
+  <li>Storage requests (reads, writes, flushes) directed to a volume will arrive at the SPDK
+target layer and be translated and forwarded to its associated SPDK bdev. SPDK bdevs can
+be of many different types, depending on the type of backing storage for the volume.
+Examples include NVMe over TCP, NVMe over RDMA, or Ceph RBD.</li>
+  <li>The SPDK bdev module responsible for a given bdev type forwards the storage request to
+the bdev’s associated remote target. For example, the NVMe/TCP bdev module is responsible
+for establishing TCP connections to the remote NVMe/TCP target and sending NVMe CONNECT
+commands to associate those connections with the NVMe subsystem containing the volume
+associated with the tenant’s virtual storage controller. It also constructs NVMe commands
+for the storage request(s) and sends them (along with any write data) to the remote target
+over the previously established TCP socket.</li>
+  <li>Eventually the remote target responds with the completion for the request (along with any
+read data).  The SPDK bdev module consumes the response and once the entire completion is
+received, notifies the upper layers of the SPDK storage application.</li>
+  <li>Once the SPDK target layer receives notification of the completion, any read data is
+transferred to the tenant’s memory space as specified by the original storage request. A
+device type-specific completion is also posted to the tenant’s memory space.</li>
+  <li>The tenant can now process the completion of its storage request, finishing out the
+operation.</li>
+</ol>
+
+<p>An extension to the bare metal host server usage is to run VMs inside of it and be able to
+support VMs inside of that host.  In this (nested) case vDPA (virtio data path acceleration) is
+used to connect the infrastructure directly into the VM while still preserving Live Migration.
+In this case the physical function is still hotplugged into the server, at which point the host
+server sets up a number of VFs that can be associated with emulated devices inside VMs.  This
+has a similar flow as before, except that the port creation config needs to include which VF to
+use, and this VF is not hotplugged into the VM, the VM devices remain emulated and are
+accelerated using vDPA.</p>
+
+<p>For supporting storage flows with Live Migration care must be taken not to lose any requests
+or completions since the virtio drivers are assuming that the connection between requests and
+completions is completely reliable and is unable to recover from lost transactions.</p>
+
+<p><img src="../img/IaaS-Storage-VF.png" alt="Associating VFs with VMs" title="Associating VFs with VMs" width="90%" /></p>
+
+<ol>
+  <li>Over OpenConfig, create a new virtual storage controller device, specifying the PF
+and VF # in addition to the type, number of queues, etc. This assumes that the
+corresponding PF has already been hotplugged into the host.</li>
+  <li>The storage controller has one or more attached volumes.  Storage requests directed to a
+volume will arrive at the SPDK target layer and be translated and forwarded to its associated
+SPDK bdev.</li>
+  <li>An emulated driver in the VM (either existing or newly hotplug’d in) is associated with the
+VF in the host (Note:  the VF is not passed through into the VM).  vDPA ensures that data is
+moved in and out of the VM using the device virtual function, providing a direct connection
+between VM and infrastructure (high performance, low latency).  vDPA can also enable Live
+Migration when needed on this server.</li>
+  <li>Steps 3-7 from above are the same here, except that now the VF is used to move
+requests/completions in/out of the tenant memory.</li>
+</ol>
+
+<h1 id="target-abstraction-interface">Target Abstraction Interface</h1>
+
+<p><strong>P4 Programs</strong>:  (Future Work).  Currently the pipeline for storage cannot be described in P4,
+so this work is left inside SPDK in software.</p>
+
+<p><strong>Fixed Function Tables</strong>:  For non-P4 functionality configurable through Openconfig, the
+kernel and/or SAI.  This includes the physical ports, virtual devices and QoS configuration
+tables inside the datapath.</p>
+
+<p><strong>Table Driven Interface</strong>:  Allows the P4 pipeline to be implemented in different ways, and
+for the target pipeline implementation to be chosen at runtime.</p>
+
+<p>The Target Abstraction Interface re-uses the Table Driven Interface (TDI) from networking
+to provide an abstraction layer to allow the storage dataplane to be implemented in different
+ways, and for the target pipeline implementation to be chosen at runtime.  Since the pipeline
+remains the software the differences in implementation revolve around whether the vhost layer
+logic is implemented in hardware or software.</p>
+
+<h1 id="virtual-device-table">Virtual Device Table</h1>
+<p>To implement the virtual-device openconfig objects the TDI includes a table of virtual devices
+that lists out all of the currently active virtual devices and their associated configuration.
+The name must be unique and is used as a key in the list.</p>
+
+<table class="table table=bordered">
+  <thead>
+    <tr>
+      <th style="text-align: left">Device Name</th>
+      <th style="text-align: left">Type</th>
+      <th style="text-align: left">Configuration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Example1</td>
+      <td style="text-align: left">‘virtio-net’</td>
+      <td style="text-align: left">virtio-net-config1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Example2</td>
+      <td style="text-align: left">‘virtio-blk’</td>
+      <td style="text-align: left">virtio-blk-config1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">…</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In the target it needs to be capable to hotplug or enable a device based on entries being
+populated in this table. In software targets qemu is used to hotplug new devices into VMs,
+while hardware hypervisors are able to hotplug devices directly into the attached host.
+The virtual device table abstracts the implementation of how these devices are added into
+their hosts/guests.</p>
+
+<h1 id="build-script">Build Script</h1>
+
+<p>The following URLs can be helpful for building and configuring SPDK NVMe/TCP as a
+representative block storage protocol between an initiator and target.</p>
+
+<ul>
+  <li><a href="https://spdk.io">SPDK Project Website</a></li>
+  <li><a href="https://github.com/spdk/spdk">Cloning and building SPDK</a></li>
+  <li><a href="https://spdk.io/doc/bdev.html">Create SPDK bdevs</a></li>
+  <li><a href="https://spdk.io/doc/nvmf.html">Configure SPDK NVMe/TCP target</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </div>
+
+    
+  </body>
+</html>
