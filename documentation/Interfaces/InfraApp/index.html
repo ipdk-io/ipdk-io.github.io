@@ -185,7 +185,46 @@
             <h1>Infrastructure Application Interface</h1>
           </div>
 
-          <div class="content">
+          <div class="content"><p>The Infrastructure Application Interface is:</p>
+<ol>
+  <li>Standards Based - Curated from existing standards used by Infrastructure Apps</li>
+  <li>RPC Based - The controlling application can run locally, remotely or a combination of the two</li>
+</ol>
+
+<p>The Infrastructure Application Interface can also be thought of as the northbound interface out of the IPU container, representing the different RPCs supported in IPDK:</p>
+
+<ul>
+  <li>P4Runtime : Used for programmable networking dataplane
+    <ul>
+      <li><a href="https://github.com/ipdk-io/ipdk/blob/main/build/examples/simple_l3/simple_l3.p4">Simple L3</a> - Sample P4 program packaged in with P4 OVS</li>
+    </ul>
+  </li>
+  <li>OpenConfig : Used for configuring physical ports, virtual devices, QoS and inline operations such as IPsec
+    <ul>
+      <li>Virtual Devices :  A new schema developed for IPDK that abstracts the instantiation of virtual devices connecting compute instances (VMs or bare metal hosts) to the infrastructure</li>
+      <li><a href="https://github.com/openconfig/public/blob/master/release/models/interfaces/openconfig-interfaces.yang">OpenConfig-Interfaces</a> -  Existing schema for managing physical ports connecting the infrastructure device to the network.  This schema was developed for switches and is used in the same way, even though the ports are commonly implemented in the kernel as NIC ports.</li>
+      <li><a href="https://github.com/openconfig/public/blob/master/release/models/qos/openconfig-qos.yang">OpenConfig-QoS</a> - QoS on the physical ports managed by the Interfaces schema.</li>
+    </ul>
+  </li>
+  <li>Redfish / REST API : Used for infrastructure device lifecycle &amp; platform management
+    <ul>
+      <li>Modeled after the capabilities found in <a href="https://github.com/openbmc/openbmc">OpenBMC</a>
+        <ul>
+          <li><a href="https://github.com/openbmc/docs/blob/master/REDFISH-cheatsheet.md">Redfish Cheetsheet</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>SPDK Storage Protocol : RPCs for software-defined storage</li>
+  <li>Managed Kubernetes : RPCs for controlling the infrastructure component of Kubernetes</li>
+  <li>Envoy xDS : RPCs for configuring Envoy</li>
+</ul>
+
+<p>The IPU Container is an example implementation of the Infrastructure Application Interface, and when fully realized would look like the picture below:</p>
+
+<p><img src="../IPDK_IPU_Container.png" alt="IPDK IPU Container" title="IPDK IPU Container" width="90%" /></p>
+
+<p>This isn’t the only possible implementation of the interface, these components can be mixed/matched with other software components on the device.</p>
 </div>
         </div>
       </div>
