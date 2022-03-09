@@ -7,7 +7,6 @@ visibility: public
 # Infrastructure Application Interface #
 **Virtual Devices**:  Offered to the tenant instance, device types include:
 - virtio-net
-- vmxnet3
 
 **Virtual Device Management**:  Interface to orchestration to hotplug virtual devices into instances, or associate a VF with an emulated device in an instance using vDPA.
 In IaaS we want to define a set of generic virtual devices that are offered to the tenant.  The tenant instance could be a VM or a physical machine (bare metal hosting).  In both cases the semantics of how a virtual device is 'added' to an instance is using PCIe hotplug, exactly the same as KVM.
