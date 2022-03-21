@@ -103,10 +103,12 @@ all, they should move to the new release.
 
 CVE Sub-Team Members:
 
-* Dan Daly
-* Jim Harris
-* Namrata Limaye
-* Paul Luse
+* Dan Daly, dan.daly@intel.com
+* Jim Harris, james.r.harris@intel.com
+* Namrata Limaye, namrata.limaye@intel.com
+* Paul Luse, paul.e.luse@intel.com
+* Kyle Mestery, kyle.mestery@intel.com
+* Fabrizio D'Angelo, fdangelo@redhat.com
 
 <a id="current"></a>
 ## Current CVEs
