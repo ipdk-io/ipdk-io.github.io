@@ -9,6 +9,10 @@ visibility: public
 
  - [KVM Target w/ P4 DPDK Dataplane]({% link _documentation/Targets/KVMTargetP4DPDK.md %})
 
+## DPU Targets ##
+
+ - [Marvell OCTEON DPUs]({% link _documentation/Targets/OCTEON_DPU.md %})
+
 ## IPU Targets ##
 
  - [Intel® IPU SoC Codenamed Mount Evans]({% link _documentation/Targets/MountEvansIPU.md %})
