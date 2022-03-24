@@ -20,6 +20,8 @@ toc_documentation:
     subfolderitems:
       - page: KVM Target w/ P4 DPDK
         url: /documentation/Targets/KVMTargetP4DPDK
+      - page: OCTEON DPUs
+        url: /documentation/Targets/OCTEON_DPU
       - page: Mount Evans IPU
         url: /documentation/Targets/MountEvansIPU
       - page: Oak Springs Canyon IPU
