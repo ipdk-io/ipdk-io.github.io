@@ -27,7 +27,7 @@ The mailing list will be set up at the same time as Gerrit and will be used for 
 <a id="governance"></a>
 # Governance
 
-IPDK is in the process of formalizing a governance structure, targeting a proposal to be posted here by the end of 2021.
+IPDK is in the process of formalizing a governance structure, discussed during the [Open Programmable Infrastructure Event](https://ipdk.io/news/2022/03/18/OPI-Event/).
 
 <a id="meetings"></a>
 # Community Meetings
