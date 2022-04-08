@@ -10,7 +10,7 @@ The Infrastructure Application Interface is:
 The Infrastructure Application Interface can also be thought of as the northbound interface out of the IPU container, representing the different RPCs supported in IPDK:
 
  - P4Runtime : Used for programmable networking dataplane
-   - [Simple L3](https://github.com/ipdk-io/ipdk/blob/main/build/examples/simple_l3/simple_l3.p4) - Sample P4 program packaged in with P4 OVS
+   - [Simple L3](https://github.com/ipdk-io/ipdk/blob/main/build/networking/examples/simple_l3/simple_l3.p4) - Sample P4 program packaged in with P4 OVS
  - OpenConfig : Used for configuring physical ports, virtual devices, QoS and inline operations such as IPsec
    - Virtual Devices :  A new schema developed for IPDK that abstracts the instantiation of virtual devices connecting compute instances (VMs or bare metal hosts) to the infrastructure
    - [OpenConfig-Interfaces](https://github.com/openconfig/public/blob/master/release/models/interfaces/openconfig-interfaces.yang) -  Existing schema for managing physical ports connecting the infrastructure device to the network.  This schema was developed for switches and is used in the same way, even though the ports are commonly implemented in the kernel as NIC ports.
