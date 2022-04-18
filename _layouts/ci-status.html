@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+{% include head.html %}
+
+
+
+<head>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      border: 1pt solid #511C74;
+      margin: 10px;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    @media screen and (max-width: 767px) {
+      .main {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+      }
+    }
+
+    tr {
+      border-width: 2px;
+      /* border-bottom: 1px solid lightgrey */
+    }
+
+    .main h3 {
+      font-weight: bold;
+    }
+
+    .main th {
+      background-color: #511C74;
+      color: white;
+      text-align: left;
+      padding: 14px;
+      height: 15px;
+    }
+
+    .main tr {
+      border-bottom: 1px solid lightgrey;
+      padding: 2px;
+    }
+
+    .main td {
+      padding: 12px;
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  {% include header.html %}
+
+
+  <div class="main">
+    <div style="width:48%;margin: 15px;">
+      <table>
+
+        <tr>
+          <th colspan="2">
+            <h3>Build Queue</h3>
+          </th>
+          <th></th>
+          <th></th>
+          <th></th>
+
+        </tr>
+
+        <tr>
+          <th style="background-color: #F8F8F8;color: black;">Type</th>
+          <th style="background-color: #F8F8F8;color: black;">Build</th>
+          <th style="background-color: #F8F8F8;color: black;">Commit Message</th>
+          <th style="background-color: #F8F8F8;color: black;">Elapsed Time</th>
+          <th style="background-color: #F8F8F8;color: black;">Build Result</th>
+        </tr>
+        <tbody id="myTable">
+
+        </tbody>
+      </table>
+    </div>
+    <div style="width: 48%;margin: 15px;">
+      <table style="height:400px">
+        <th colspan="3">
+          <h3>Pending Approval</h3>
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <tr>
+          <th style="background-color: #F8F8F8;color: black;">Build Type</th>
+          <th style="background-color: #F8F8F8;color: black;">Commit Message</th>
+          <th style="background-color: #F8F8F8;color: black;">Owner</th>
+        </tr>
+        <tbody id="pending">
+
+        </tbody>
+      </table>
+
+
+
+      <table>
+        <th colspan="3">
+          <h3>Build Pool</h3>
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <tr>
+          <th style="background-color: #F8F8F8;color: black;">Machine</th>
+          <th style="background-color: #F8F8F8;color: black;">OS</th>
+          <th style="background-color: #F8F8F8;color: black;">Running task</th>
+          <th style="background-color: #F8F8F8;color: black;">Status</th>
+        </tr>
+        <tbody id="buildPool">
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+  <script>
+    var myArray = [
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '--', 'Build': "Queued" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '--', 'Build': "Queued" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '--', 'Build': "Queued" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '--', 'Build': "Queued" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '3/12/1991', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '10/31/1995', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '11/10/1989', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '3/12/1991', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '10/31/1995', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '11/10/1989', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '3/12/1991', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '10/31/1995', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': '11/10/1989', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'autotest-per-patch', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': '25', 'commitMessage': 'spdk_top: separate drawing poller popup content', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': '27', 'commitMessage': '3/12/1991', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': '24', 'commitMessage': '10/31/1995', 'elapsed': '0:30:16s', 'Build': "Pass" },
+    ]
+    var pending = [
+      { 'type': 'Review', 'build': 'nvme_tcp: set transport_ack_timeout to ack_timeout', 'commitMessage': 'zhangd28', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'nvme_tcp: set transport_ack_timeout to ack_timeout', 'commitMessage': 'zhangd28', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': '2nvme_tcp: set transport_ack_timeout to ack_timeout9', 'commitMessage': 'Jon Kohler', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'nvme_tcp: set transport_ack_timeout to ack_timeout', 'commitMessage': 'zhangd28', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'nvme_tcp: set transport_ack_timeout to ack_timeout', 'commitMessage': 'Jon Kohler', 'elapsed': '0:30:16s', 'Build': "Pass" },
+      { 'type': 'Review', 'build': 'nvme_tcp: set transport_ack_timeout to ack_timeout', 'commitMessage': 'Jon Kohler', 'elapsed': '0:30:16s', 'Build': "Pass" },
+    ]
+    var buildPool = [
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+      {
+        "machine": "GP1",
+        "os": "Fedora 34 (Cloud Edition) (5.12.10-300.fc34.x86_64)",
+        "runningtask": "nvmf-tcp-phy-autotest #9510",
+        "status": "offline"
+      },
+    ]
+
+    build(myArray)
+    function build(data) {
+      var table = document.getElementById('myTable')
+
+      for (var i = 0; i < data.length; i++) {
+        var row = `<tr>
+            <td style="width:15%"><div style="background-color: #5BC0DE;color: white;width:auto;padding:3px;text-align:center">${data[i].type}</div></td>
+            <td>${data[i].build}</td>
+            <td>${data[i].commitMessage}</td>
+            <td>${data[i].elapsed}</td>
+            <td style="width:15%"><div style="background-color: #F0AD4E;color: white;width:auto;padding:3px;text-align:center">${data[i].Build}</div></td>
+          </tr>`
+        table.innerHTML += row
+
+
+      }
+    }
+
+    pendingApproval(pending)
+
+    function pendingApproval(data) {
+      var table = document.getElementById('pending')
+
+      for (var i = 0; i < data.length; i++) {
+        var row = `<tr>
+          <td style="width:15%"><div style="background-color: #5BC0DE;color: white;width:auto;padding:3px;text-align:center">${data[i].type}</div></td>
+            <td>${data[i].build}</td>
+            <td>${data[i].commitMessage}</td>
+           
+          </tr>`
+        table.innerHTML += row
+
+
+      }
+    }
+
+    Pool(buildPool)
+
+    function Pool(data) {
+      var table = document.getElementById('buildPool')
+
+      for (var i = 0; i < data.length; i++) {
+        var row = `<tr>
+          <td>${data[i].machine}</td>
+        <td>${data[i].os}</td>
+        <td>${data[i].runningtask}</td>
+        <td style="width:15%"><div style="background-color: #D9534F;color: white;width:auto;padding:3px;text-align:center">${data[i].status}</div></td>
+        
+      </tr>`
+        table.innerHTML += row
+
+
+      }
+    }
+
+  </script>
+</body>
+
+</html>

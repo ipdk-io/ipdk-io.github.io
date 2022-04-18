@@ -24,6 +24,9 @@ boxes:
   - title: News
     title-cn: 动态
     url: /blog/
+  - title: CI Status
+    title-cn: 身份
+    url: /ci-status/
 
 collections:
   documentation:
