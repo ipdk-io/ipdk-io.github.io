@@ -69,7 +69,7 @@ Accelerator Control can be qualified as consisting of two types of components:  
 
 ## API Linkable Libraries
 
- - [Table Driven Interface](https://github.com/p4lang/tdi) : A linkable library API that is target agnostic and enables targets to be dynamically linked with applications at runtime.  The TDI sits at the bottom of the P4Runtime and OpenConfig servers inside IPDK enabling a generic API to all possible targets.  This facilitates compiler driven config space (using p4info) as well as static table config space used in OpenConfig (phyiscal devices, virtual devices, QoS, management).
+ - [Table Driven Interface](https://github.com/p4lang/tdi) : A linkable library API that is target agnostic and enables targets to be dynamically linked with applications at runtime.  The TDI sits at the bottom of the P4Runtime and OpenConfig servers inside IPDK enabling a generic API to all possible targets.  This facilitates compiler driven config space (using p4info) as well as static table config space used in OpenConfig (physical devices, virtual devices, QoS, management).
  - SAI-to-TDI : A wrapper around TDI to provide SAI (Switch Abstraction Interface) APIs to an application on top of a target that supports TDI and is running a SAI compatible P4 program.
  - Programmable Tables : Tables derived from the compilation of P4 programs into the target.  These tables are defined by the p4info artifacts that are produced after successful compilation.  These programmable tables are focused on the networking dataplane- switching, routing, flows, ACLs, tunnels, connection tracking, etc. including any inline functions such as inline crypto.  For the SAI interface to be supported there must be mappings from SAI into the programmable tables (for example mapping routing operations to routing tables).
  - Fixed Tables : Tables defined in a schema and agreed upon by the application and the target as being required for this usage.
@@ -110,6 +110,6 @@ Accelerator Control can be qualified as consisting of two types of components:  
 
 Supported Devices
  - Linux netdev : Used for moving traffic in and out of the infrastructure, between the instances and infrastructure device as well as between the network and the infrastructure device.
- - Inverse block device :  Used for moving storage requests and completions between instances and the infrastructrure device.  Block storage requests arrive from the instance(s) and in the other direction block storage completions form the infrastructure device's responses to these requests.
+ - Inverse block device :  Used for moving storage requests and completions between instances and the infrastructure device.  Block storage requests arrive from the instance(s) and in the other direction block storage completions form the infrastructure device's responses to these requests.
  - Crypto device :  Used by infrastructure applications to pass data to a lookaside crypto engine that is returned either encrypted or decrypted.
  - Compress device : Used by the infrastructure applications to pass data to a lookaside compression engine that is either compressed or decompressed.

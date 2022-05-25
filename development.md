@@ -27,7 +27,7 @@ the [core maintainers](#core) who can be contacted on the mailing list or in Sla
 <a id="guidelines"></a>
 ## Development Guidelines
 
-These general guidelines help ensure that the SPDK development community remains fun, fair, and efficient.
+These general guidelines help ensure that the IPDK development community remains fun, fair, and efficient.
 
 * Developers should strive to be active on Gerrit in order to stay in the loop on upcoming changes.
 * Coding and submission guidelines (i.e. being clear and concise in the commit message) should always be respected.
