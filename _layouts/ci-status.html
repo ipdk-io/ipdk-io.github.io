@@ -78,10 +78,10 @@
     <script>
         var tableOpen = document.getElementById('open')
         function getOpen() {
-            // Here owner and repo is pointing to ipdk-gerrit-test repository. It can be changed to actual repository on-demand.
+            // Here owner and repo is pointing to ipdk-io/ipdk repository.
             const Values = {
-                owner: "ipdksw", 
-                repo: "ipdk-gerrit-test"
+                owner: "ipdk-io", 
+                repo: "ipdk"
             }
             let row;
             const data = fetch(`https://api.github.com/repos/${Values.owner}/${Values.repo}/pulls`, {
