@@ -21,29 +21,77 @@
 
         tr {
             border-bottom: 1px solid lightgrey;
-            padding: 2px;
+            padding: 4px;
         }
 
         td {
-            padding: 8px;
+            padding: 6px;
         }
 
         th {
             color: black;
-            padding: 14px;
+            padding: 10px;
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
+            overflow: auto;
+            max-height: 590px;
+            scroll-behavior: smooth;
         }
 
         .container div {
             flex: 1;
             font-family: arial, sans-serif;
             width: 100%;
-            /* margin: 10px; */
+            margin: 10px;
+        }
 
+        .header {
+            background-color: #511C74;
+            position: sticky;
+            top: 0;
+        }
+
+        .tableHeader {
+            position: sticky;
+            top: 8%;
+            background-color: white;
+            width: 100%;
+        }
+
+        .tableBody {
+            margin-top: 8%;
+        }
+
+        .tableData {
+            padding-left: 15px
+        }
+
+        .open {
+            background-color: #5BC0DE;
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        .review {
+            background-color: orange;
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        .assignee {
+            background-color: yellow;
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        .server {
+            padding: 5px;
         }
     </style>
 </head>
@@ -53,72 +101,99 @@
     <div class="container">
         <div>
             <table>
-                <tr style="background-color: #511C74;">
+                <tr class="header">
                     <th colspan="3" class="p-1">
-                        <h4>Open</h4>
+                        <h4>Ipdk-Io</h4>
                     </th>
                     <th></th>
                     <th></th>
-                    <th>
-                    </th>
+                    <th></th>
                 </tr>
-                <tr>
-                    <th>PR No</th>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Owner</th>
-                    <th>State</th>
+                <tr class="tableHeader">
+                    <th class="p-1">PR No</th>
+                    <th class="p-1">Name</th>
+                    <th class="p-1">Title</th>
+                    <th class="p-1">Owner</th>
+                    <th colspan="2" class="p-1">State</th>
                 </tr>
-                <tbody id="open">
+                <tbody class="tableBody" id="ipdk-io">
 
                 </tbody>
             </table>
         </div>
-    </div>
-    <script>
-        var tableOpen = document.getElementById('open')
-        function getOpen() {
-            // Here owner and repo is pointing to ipdk-io/ipdk repository.
-            const Values = {
-                owner: "ipdk-io", 
-                repo: "ipdk"
+
+        <script>
+            var table_data = document.getElementById('ipdk-io')
+
+            function ApiLimit() {
+                const data = fetch(`https://api.github.com/rate_limit`, {
+                    Method: 'GET',
+                    Cache: 'default'
+                }).then((response) =>
+                    response.json()
+                ).then((limit) => {
+                    console.log("limit", limit)
+                })
             }
-            let row;
-            const data = fetch(`https://api.github.com/repos/${Values.owner}/${Values.repo}/pulls`, {
-                Method: 'GET',
-                Headers: {
-                    'Authorization': 'Bearer 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',
-                    'Accept': 'application/json',
-                    'Content-Type': 'multipart/form-data',
 
-                },
-                Cache: 'default'
-            }).then((response) =>
-                response.json()
-            ).then((data) => {
-                if (data.length > 0) {
-                    data.map(datas => {
-                        let row = `
-                        <tr>
-                        <td style="padding-left:15px"><a href=${datas.html_url} target="_blank">${datas.number}</a></td>  
-                        <td style="padding-left:15px;"><a href=${datas.base.repo.html_url} target="_blank">${datas.base.repo.full_name}</a></td>  
-                          <td>${datas.title}</td>
-                          <td >${datas.user.login}</td>
-                          <td style="width:12px"><div style="background-color: #5BC0DE;color: white;padding:3px;text-align:center;">${datas.state}</div></td>
-              </tr>
-                    `
-                        tableOpen.innerHTML += row
-                    })
-                } else {
-                    let row = `  <h6>${'NO DATA FOUND'}</h6>`
-                    tableOpen.innerHTML += row
+            function organization() {
+                const payload = {
+                    owner: "ipdk-io",
                 }
+                const data = fetch(`https://api.github.com/orgs/${payload.owner}/repos?type=all&per_page=100&page=1`, {
+                    Method: 'GET',
+                    Cache: 'default'
+                }).then((response) =>
+                    response.json()
+                ).then((org) => {
+                    if (org.length > 0) {
+                        org.map(orgs => {
+                            const data = fetch(`https://api.github.com/repos/${payload.owner}/${orgs.name}/pulls`, {
+                                Method: 'GET',
+                                Cache: 'default'
+                            }).then((response) =>
+                                response.json()
+                            ).then((orgPull) => {
+                                if (orgPull.length > 0) {
+                                    orgPull.map(item => {
+                                        let row = `
+       <tr >
+       <td class="tableData"><a href=${item.html_url} target="_blank">${item.number}</a></td>  
+       <td class="tableData"><a href=${item.base.repo.html_url} target="_blank">${item.base.repo.full_name}</a></td>  
+         <td>${item.title}</td>
+         <td >${item.user.login}</td>
+         <td style="width:12px">
+         ${item.state === 'open' && item.assignee === [] && item.requested_reviewers === [] ?
+            `<div class="open">
+             ${'Open'}
+           </div>`
+            :
+            item.state === 'open' && item.requested_reviewers !== [] ?
+            `<div class="review">
+           ${'In Review'}
+           </div>`
+            : item.state === 'open' && item.requested_reviewers === [] && item.assignees !== [] ?
+            `<div class="assignee">
+           ${'Assigned'}
+           </div>`  : ''}
+        </td>
+        </tr>`
+         table_data.innerHTML += row})
+                                }
 
-            })
-        }
-        getOpen()
-    </script>
+                            })
 
+                        })
+                    } else {
+                        let row = `  <h6 class="server">${'Server Busy Please try after some time....'}</h6>`
+                        table_data.innerHTML += row
+                    }
+
+                })
+            }
+            ApiLimit()
+            organization()
+        </script>
 </body>
 
 </html>
