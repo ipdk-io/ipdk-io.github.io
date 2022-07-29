@@ -12,19 +12,31 @@ permalink: pretty
 include: [.well-known]
 
 boxes:
+
+  - title: download
+    title-cn: 下载
+    url: /download/
   - title: documentation
     title-cn: 文档
     url: /documentation/
   - title: development
     title-cn: 开发
     url: /development/
+  - title: CI Status
+    title-cn: 身份
+    url: /ci-status/
   - title: community
     title-cn: 社区
     url: /community/
+  # The below code is to enable the roadmap tab in Navigation, Currently it's in hold. 
+  # - title: roadmap 
+  #   title-cn: 路线图
+  #   url: /roadmap/
   - title: News
     title-cn: 动态
     url: /blog/
 
+  
 collections:
   documentation:
     output: true
