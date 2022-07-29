@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+{% include head.html %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            border: 1pt solid #511C74;
+            margin: 10px;
+        }
+
+        h4 {
+            font-weight: bolder;
+            padding-left: 14px;
+            color: white;
+        }
+
+        tr {
+            border-bottom: 1px solid lightgrey;
+            padding: 4px;
+        }
+
+        td {
+            padding: 6px;
+        }
+
+        th {
+            color: black;
+            padding: 10px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            overflow: auto;
+            max-height: 590px;
+            scroll-behavior: smooth;
+        }
+
+        .container div {
+            flex: 1;
+            font-family: arial, sans-serif;
+            width: 100%;
+            margin: 10px;
+        }
+
+        .header {
+            background-color: #511C74;
+            position: sticky;
+            top: 0;
+        }
+
+        .tableHeader {
+            position: sticky;
+            top: 8%;
+            background-color: white;
+            width: 100%;
+        }
+
+        .tableBody {
+            margin-top: 8%;
+        }
+
+        .tableData {
+            padding-left: 15px
+        }
+
+        .open {
+            background-color: #5BC0DE;
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        .review {
+            background-color: orange;
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        .assignee {
+            background-color: yellow;
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        .server {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    {% include header.html %}
+    <div class="container">
+        <div>
+            <table>
+                <tr class="header">
+                    <th colspan="3" class="p-1">
+                        <h4>Ipdk-Io</h4>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr class="tableHeader">
+                    <th class="p-1">PR No</th>
+                    <th class="p-1">Name</th>
+                    <th class="p-1">Title</th>
+                    <th class="p-1">Owner</th>
+                    <th colspan="2" class="p-1">State</th>
+                </tr>
+                <tbody class="tableBody" id="ipdk-io">
+
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            var table_data = document.getElementById('ipdk-io')
+
+            function ApiLimit() {
+                const data = fetch(`https://api.github.com/rate_limit`, {
+                    Method: 'GET',
+                    Cache: 'default'
+                }).then((response) =>
+                    response.json()
+                ).then((limit) => {
+                    console.log("limit", limit)
+                })
+            }
+
+            function organization() {
+                const payload = {
+                    owner: "ipdk-io",
+                }
+                const data = fetch(`https://api.github.com/orgs/${payload.owner}/repos?type=all&per_page=100&page=1`, {
+                    Method: 'GET',
+                    Cache: 'default'
+                }).then((response) =>
+                    response.json()
+                ).then((org) => {
+                    if (org.length > 0) {
+                        org.map(orgs => {
+                            const data = fetch(`https://api.github.com/repos/${payload.owner}/${orgs.name}/pulls`, {
+                                Method: 'GET',
+                                Cache: 'default'
+                            }).then((response) =>
+                                response.json()
+                            ).then((orgPull) => {
+                                if (orgPull.length > 0) {
+                                    orgPull.map(item => {
+                                        let row = `
+       <tr >
+       <td class="tableData"><a href=${item.html_url} target="_blank">${item.number}</a></td>  
+       <td class="tableData"><a href=${item.base.repo.html_url} target="_blank">${item.base.repo.full_name}</a></td>  
+         <td>${item.title}</td>
+         <td >${item.user.login}</td>
+         <td style="width:12px">
+         ${item.state === 'open' && item.assignee === [] && item.requested_reviewers === [] ?
+            `<div class="open">
+             ${'Open'}
+           </div>`
+            :
+            item.state === 'open' && item.requested_reviewers !== [] ?
+            `<div class="review">
+           ${'In Review'}
+           </div>`
+            : item.state === 'open' && item.requested_reviewers === [] && item.assignees !== [] ?
+            `<div class="assignee">
+           ${'Assigned'}
+           </div>`  : ''}
+        </td>
+        </tr>`
+         table_data.innerHTML += row})
+                                }
+
+                            })
+
+                        })
+                    } else {
+                        let row = `  <h6 class="server">${'Server Busy Please try after some time....'}</h6>`
+                        table_data.innerHTML += row
+                    }
+
+                })
+            }
+            ApiLimit()
+            organization()
+        </script>
+</body>
+
+</html>
