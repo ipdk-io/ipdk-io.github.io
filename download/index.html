@@ -13,20 +13,23 @@
 ">
   <meta name="author" content="TBD">
 
-  <title>IPDK用户案例</title>
+  <title>IPDK Release</title>
 
-  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:400,900' type='text/css'>
-  <link rel="stylesheet" href="../../css/spdk.css">
-  <link rel="stylesheet" href="../../css/syntax.css">
+  <link rel="stylesheet" href="../css/spdk.css">
+  <link rel="stylesheet" href="../css/syntax.css">
 
-  <link href="../../feed.xml" type="application/atom+xml" rel="alternate" title="Atom Feed">
+  <link href="../feed.xml" type="application/atom+xml" rel="alternate" title="Atom Feed">
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 </head>
 
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
 
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-purp px-2">
@@ -36,8 +39,8 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <a class="navbar-brand" href="../../" aria-label="IPDK">
-    <img src="../../img/ipdk_mark_FIN_REV.svg" width="50" alt="Infrastructure Programmer Development Kit" />
+  <a class="navbar-brand" href="../" aria-label="IPDK">
+    <img src="../img/ipdk_mark_FIN_REV.svg" width="50" alt="Infrastructure Programmer Development Kit" />
   </a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -45,56 +48,57 @@
     <div class="navbar-nav mr-auto">
       
       
-       <a class="nav-link header-link"  
-        href="../../cn/download/">
+      
+      <a class="nav-link header-link active text-white"  
+        href="../download/">
         
         
-        下载
+        download
         
       </a>
       
       
        <a class="nav-link header-link"  
-        href="../../cn/documentation/">
+        href="../documentation/">
         
         
-        文档
-        
-      </a>
-      
-      
-       <a class="nav-link header-link"  
-        href="../../cn/development/">
-        
-        
-        开发
+        documentation
         
       </a>
       
       
        <a class="nav-link header-link"  
-        href="../../cn/ci-status/">
+        href="../development/">
         
         
-        身份
-        
-      </a>
-      
-      
-       <a class="nav-link header-link"  
-        href="../../cn/community/">
-        
-        
-        社区
+        development
         
       </a>
       
       
        <a class="nav-link header-link"  
-        href="../../cn/blog/">
+        href="../ci-status/">
         
         
-        动态
+        CI Status
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../community/">
+        
+        
+        community
+        
+      </a>
+      
+      
+       <a class="nav-link header-link"  
+        href="../blog/">
+        
+        
+        News
         
       </a>
       
@@ -113,48 +117,36 @@
 
     <div class="container-fluid">
       <div class="row">
-
-        
-
-        <div class="col-md-3 border-right border-dark">
-
-          <nav class="navbar navbar-expand-md navbar-light">
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navTableOfContents" aria-controls="navTableOfContents" aria-expanded="false" aria-label="Toggle Table of Contents">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navTableOfContents">
-
-              <div class="navbar-nav flex-column">
-                <ul class="no-bullets">
-                  
-                    <li class="nav-item">
-                      
-                        <a class="nav-link text-dark text-wrap"  class href="../news">News</a>
-                      
-                      
-                        
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
-
-        <div class="col-md-9 py-3 pl-5">
-
-        
-
+        <div class="col-md-12 py-3 pl-5">
           <div class="jumbotron">
-            <h1>IPDK用户案例</h1>
+            <h1>IPDK Release</h1>
           </div>
 
-          <div class="content"><p>Coming Soon</p>
+          <div class="content"><h2 id="-latest-release"><span class="glyphicon glyphicon-download"></span> <a href="https://github.com/ipdk-io/ipdk/releases/tag/v22.07">Latest Release</a></h2>
+
+<p>All releases of IPDK are available through <a target="_blank" href="https://github.com/ipdk-io/ipdk/releases/tag/v22.07">GitHub</a>. GitHub serves as the master repository for all changes, so the master branch always contains the latest code.</p>
+
+<p><a id="Release Process"></a></p>
+<h2 id="release-process">Release Process</h2>
+
+<p>An IPDK release defines a public <a href="#">API</a> version, where the <a href="#">public API</a> comprises all of the C header files in the <a href="#">include/IPDK</a> directory. The version names are in the format YY.MM.vv, where YY is year, MM is month, and vv is a minor version number and is often omitted. For example, the release in July of 2022 is version 22.07. The minor version is reserved for bug fix releases made at a later date that remain API compatible with the original release. IPDK makes no guarantees about API compatibility between releases with differing YY.MM versions, although every effort will be made to avoid breaking the API. Releases with identical YY.MM versions but differing minor version numbers are guaranteed to be API compatible. IPDK makes no guarantees about <a href="#">ABI</a> compatibility between any two versions at this time.</p>
+
+<p>IPDK uses a quarterly release cycle. The first two months of each quarter are an open window for merges. The final month of each quarter is intended only for bug fixes and documentation and so pull requests containing new features may be delayed, at the discretion of the maintainers.<a href="#">A high level roadmap</a> for the next release is always posted at the start of the release cycle. The roadmap may be discussed on the IPDK mailing list at any time, and feedback is very welcome.</p>
+
+<p><a id="Bug Reports"></a></p>
+<h2 id="bug-reports">Bug Reports</h2>
+
+<p>Bug reports may be filed using <a target="_blank" href="https://github.com/ipdk-io/ipdk/issues">GitHub issues</a> and should indicate the version of IPDK in question (or say master for the latest). Bugs will always be fixed on the master branch first, but may be back-ported to either of the two most recent releases if:</p>
+
+<ul>
+  <li>A user requests the back-port by commenting on the issue stating to which version they’d like the bug back-ported</li>
+  <li>The bug fix does not require a breaking API change</li>
+</ul>
+
 </div>
         </div>
       </div>
     </div>
-
     
   </body>
 </html>
