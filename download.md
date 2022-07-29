@@ -12,7 +12,7 @@ All releases of IPDK are available through <a target="_blank" href="https://gith
 <a id="Release Process"></a>
 ## Release Process
 
- The version names are in the format YY.MM.vv, where YY is year, MM is month, and vv is a minor version number and is often omitted. For example, the release in July of 2022 is version 22.07. The minor version is reserved for bug fix releases made at a later date that remain API compatible with the original release. IPDK makes no guarantees about API compatibility between releases with differing YY.MM versions, although every effort will be made to avoid breaking the API. Releases with identical YY.MM versions but differing minor version numbers are guaranteed to be API compatible.
+The version names are in the format YY.MM.vv, where YY is year, MM is month, and vv is a minor version number and is often omitted. For example, the release in July of 2022 is version 22.07. The minor version is reserved for bug fix releases made at a later date that remain API compatible with the original release. IPDK makes no guarantees about API compatibility between releases with differing YY.MM versions, although every effort will be made to avoid breaking the API. Releases with identical YY.MM versions but differing minor version numbers are guaranteed to be API compatible.
 
 
 <a id="Bug Reports"></a>
