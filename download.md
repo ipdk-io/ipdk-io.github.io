@@ -3,10 +3,10 @@ layout: download
 title: IPDK Release
 ---
 
-<span class="glyphicon glyphicon-download"></span> [Latest Release](https://github.com/ipdk-io/ipdk/releases/tag/v22.07)
+<span class="glyphicon glyphicon-download"></span> [Latest Release](https://github.com/ipdk-io/ipdk/releases)
 ---------
 
-All releases of IPDK are available through <a target="_blank" href="https://github.com/ipdk-io/ipdk/releases/tag/v22.07">GitHub</a>. GitHub serves as the master repository for all changes, so the master branch always contains the latest code.
+All releases of IPDK are available through <a target="_blank" href="https://github.com/ipdk-io/ipdk/releases">GitHub</a>. GitHub serves as the master repository for all changes, so the master branch always contains the latest code.
 
 
 <a id="Release Process"></a>
