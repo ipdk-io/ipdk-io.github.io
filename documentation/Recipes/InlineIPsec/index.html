@@ -13,7 +13,7 @@
 ">
   <meta name="author" content="TBD">
 
-  <title>Mount Evans IPU</title>
+  <title>Inline Acceleration - IPsec</title>
 
   <link rel="stylesheet" href="../../../css/bootstrap.min.css">
   <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:400,900' type='text/css'>
@@ -234,25 +234,121 @@
         <div class="col-md-9 py-3 pl-5">
 
           <div class="jumbotron">
-            <h1>Mount Evans IPU</h1>
+            <h1>Inline Acceleration - IPsec</h1>
           </div>
 
-          <div class="content"><h2 id="supported-infrastructure-application-interfaces">Supported Infrastructure Application Interfaces</h2>
+          <div class="content"><p>The Inline IPsec Recipe is an application that enables <a href="https://www.strongswan.org/">strongSwan</a> to use the <a href="https://ipdk.io/documentation/Interfaces/InfraApp/">Infrastructure Application Inteface</a>, specifically the P4Runtime and OpenConfig gRPCs provided by the <a href="https://ipdk.io/documentation/Recipes/InfrastructureNetworking/">Networking Recipe</a>. OpenConfig is used to configure security associations into the infrastructure and P4 is used program how and where the IPsec is inlined.</p>
+
+<p>This recipe integrates the <a href="https://github.com/opiproject/opi-api/blob/main/security/proto/autogen.md">OPI Security API specification</a> to act as a northbound RPC to configure strongSwan remotely.</p>
+
+<p><img src="../img/InlineIPsec_Recipe.svg" alt="Top Level Components" title="Inline IPsec Top Level" width="60%" /></p>
+
+<h1 id="infrastructure-application-interface">Infrastructure Application Interface</h1>
 
 <ul>
-  <li>P4Runtime (via OVS)</li>
-  <li>OpenConfig (via OVS)</li>
+  <li><a href="https://www.strongswan.org/">strongSwan</a> is used as the IKE control plane.  No code changes are needed in strongSwan.</li>
+  <li>A strongSwan plug-in is used to convert security association (SA) information into OpenConfig RPC messages to the underlying infrastructure.  The P4 program defines which modes are required in the pipeline, as well as where the IPsec is inserted into the broader virtual networking pipeline:
+    <ul>
+      <li><strong>Tunnel vs. Transport</strong>: Determines how the original packet is transformed during encryption/decryption as below: 
+<img src="../img/IPsec_Packet_Transforms.svg" alt="IPsec Packet Transforms" title="IPsec Packet Transforms" width="60%" /></li>
+      <li><strong>Encrypted Physical Ports</strong>: Encrypted tunnels between devices over physical ports.  On the wire this wraps additional headers on the outside of the packet in the same way that network virtualization headers such as VXLAN are added/removed.</li>
+      <li><strong>Encrypted Virtual Ports</strong>: Encrypted virtual ports plugged into compute instances (all traffic going in/out of a given virtual port will be encrypted/decrypted).  On the wire this puts the IPsec headers onto the innermost headers belonging to the end user of the compute instance.</li>
+    </ul>
+  </li>
 </ul>
 
-<p>Mount Evans supports the virtual devices OpenConfig schema using a Hardware Hypervisor to enable virtual devices directly into hosts, guests and containers.</p>
+<p>The use of cryptography to secure data plane traffic has become common practice. Encrypting and decrypting network traffic using host resources requires that the host must also perform any packet processing of post-decryption receive packets and pre-encryption transmit packets. This can consume significant host compute resources. Offloading packet crypto processing to the data plane removes the burden for cryptographic processing from the host and also allows the infrastructure to be used for pre-encryption and post-decryption packet processing functions.</p>
 
-<h2 id="supported-target-abstraction-interfaces">Supported Target Abstraction Interfaces</h2>
+<p>This recipe looks at inline IPsec processing where the crypto is terminated in the infrastructure, which avoids having specialized drivers or control planes on the compute instance(s). The IPsec control plane (IKE protocol) is offloaded to the infrastructure. The IKE protocol processing runs in software on the infrastructure cores and programs the data plane with offloaded IPsec flows. The data plane programming is separated into two parts, P4Runtime for programming the P4 pipeline and OpenConfig for programming the IPsec crypto configuration. The IPsec crypto configuration includes the IPsec Security Association (SA) table entries (i.e. crypto keys and algorithm selection) and is used for reporting events related to lifetime expiration of SA entries. Rekeying and re-authentication configuration is set using OpenConfig and is translated into lower level dataplane updates at the Target Abstraction Interface.</p>
 
-<p>Mount Evans supports the PNA (Portable NIC Architecture) P4 architecture.  The resulting P4 pipeline can be populated at runtime using the Table-Driven Interface (TDI).</p>
+<h1 id="target-abstraction-interface">Target Abstraction Interface</h1>
 
-<h2 id="how-to-build">How to Build</h2>
+<p>Targets supporting this application must export the following tables through the Table-Driven Interface:</p>
 
-<p>More information can be found at intel.com: <a href="https://www.intel.com/content/www/us/en/products/platforms/details/mount-evans.html">Intel® IPU SoC Codenamed Mount Evans</a></p>
+<ol>
+  <li>P4 Tables compiled from the Inline IPsec P4 program.
+    <ul>
+      <li>Control blocks for Tunnel and Transport modes.</li>
+      <li>Parser support for IPsec ESP</li>
+      <li>Modify logic to encapsulate on the outer and inner headers of the packet.</li>
+    </ul>
+  </li>
+  <li>IPsec OpenConfig schema based on the RFC
+    <ul>
+      <li>Configuration of the type &amp; strength of encryption</li>
+      <li>Encryption keys w/ mechanisms to rekey</li>
+      <li>Authentication &amp; Re-authentication mechanisms</li>
+      <li>Classification</li>
+      <li>Access Control Lists</li>
+      <li>Designed to stay aligned with the <a href="https://github.com/opiproject/opi-api/blob/main/security/proto/autogen.md">OPI Security API specification</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="tunnel-mode">Tunnel Mode</h2>
+
+<p>The resulting logical pipelines for IPsec tunnel mode are illustrated below.</p>
+
+<p><img src="../img/IPsec-IP-Tunnel-Pipelines.svg" alt="IPsec IP Tunnel Pipelines" title="IPsec IP Tunnel Pipelines" width="60%" /></p>
+
+<h2 id="net_to_host-rx-pipeline-processing-elements">NET_TO_HOST (Rx) pipeline processing elements</h2>
+
+<table class="table table=bordered">
+  <thead>
+    <tr>
+      <th style="text-align: right">Step</th>
+      <th style="text-align: left">Table</th>
+      <th style="text-align: left">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">IPsec Rx SA Classification Table</td>
+      <td style="text-align: left">Maps Rx IPsec packets to IPsec SA entries using the packet header fields. Sets packet metadata to specify the SA index and to indicated that IPsec processing is required.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: left">IPsec Crypto Engine</td>
+      <td style="text-align: left">Decrypts and decapsulates IPsec ESP packets using the IPsec SA entry at the SA index specified in the packet metadata.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3</td>
+      <td style="text-align: left">IPsec Rx Post Decrypt Table</td>
+      <td style="text-align: left">Verifies that the crypto processing of the packet was successful (by checking packet metadata set by the engine). In IPsec tunnel mode: Removes the outer IP header.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="host_to_net-tx-pipeline-processing-elements">HOST_TO_NET (Tx) pipeline processing elements:</h2>
+
+<table class="table table=bordered">
+  <thead>
+    <tr>
+      <th style="text-align: right">Step</th>
+      <th style="text-align: left">Table</th>
+      <th style="text-align: left">Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td style="text-align: left">IPsec Tx SPD Table</td>
+      <td style="text-align: left">An optional ACL table that identifies Tx traffic that requires IPsec protection.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: left">IPsec Tx SA Classification Table</td>
+      <td style="text-align: left">Maps Tx packets to IPsec SA entries using the packet header fields. and packet metadata. Sets packet metadata to specify the SA index and to indicated that IPsec processing is required. In IPsec tunnel mode: Adds the outer IP header.</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3</td>
+      <td style="text-align: left">IPsec Crypto Engine</td>
+      <td style="text-align: left">Encapsulates and encrypts IPsec ESP packets using the IPsec SA entry at the SA index specified in the packet metadata.</td>
+    </tr>
+  </tbody>
+</table>
+
 </div>
         </div>
       </div>
