@@ -13,6 +13,8 @@ toc_documentation:
         url: /documentation/Recipes/InfrastructureNetworking
       - page: Virtual Block Storage
         url: /documentation/Recipes/VirtualBlockStorage
+      - page: Inline IPsec 
+        url: /documentation/Recipes/InlineIPsec
       - page: Kubernetes Offload
         url: /documentation/Recipes/PaaSOffloadKubernetes
       - page: Inline Function Acceleration (Firewall Application)
