@@ -6,6 +6,8 @@ visibility: public
 
 The Inline IPsec Recipe is an application that enables [strongSwan](https://www.strongswan.org/) to use the [Infrastructure Application Inteface](https://ipdk.io/documentation/Interfaces/InfraApp/), specifically the P4Runtime and OpenConfig gRPCs provided by the [Networking Recipe](https://ipdk.io/documentation/Recipes/InfrastructureNetworking/). OpenConfig is used to configure security associations into the infrastructure and P4 is used program how and where the IPsec is inlined. 
 
+This recipe integrates the [OPI Security API specification](https://github.com/opiproject/opi-api/blob/main/security/proto/autogen.md) to act as a northbound RPC to configure strongSwan remotely.
+   
 ![Top Level Components](../img/InlineIPsec_Recipe.svg "Inline IPsec Top Level"){:width="60%"}
 
 # Infrastructure Application Interface #
