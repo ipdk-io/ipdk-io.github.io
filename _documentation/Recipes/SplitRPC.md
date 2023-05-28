@@ -10,7 +10,7 @@ visibility: public
 This recipe provides a split architecture for the popular remote procedure call (RPC) framework, gRPC. The basic idea is to partition RPC applications into two communicating components: one dedicated to user-implemented business logic, and one dedicated to RPC infrastructure processing. Once the RPC application is split, the business logic component can run on a host CPU and the infrastructure component can be run on an IPU. The recipe includes a plugin for the gRPC compiler that automatically generates the partitioned application, a novel algorithm for efficient data copies, called linearization, and a high-performance data structure that allows concurrent reads and writes from several processes.
 
 
-![Split RPC](./img/split_architecture.png "Split RPC"){:width="40%"}
+![Split RPC](./img/split_architecture.png "Split RPC" | width="40%"}
 
 The code is organized into three major components:
 
