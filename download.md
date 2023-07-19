@@ -5,7 +5,7 @@ title: IPDK Release
 
 <span class="glyphicon glyphicon-download"></span> Latest Releases
 
-Starting in 23.07, each Recipe is organized in a separate repositories.  Previous releases can still be found in the the [ipdk-io/ipdk/releases](https://github.com/ipdk-io/ipdk/releases) location as before.
+Starting in 23.07, each Recipe is organized in its own repository.  Previous releases can still be found in the the [ipdk-io/ipdk/releases](https://github.com/ipdk-io/ipdk/releases) location as before.
 
 * Network Recipe : [Releases](https://github.com/ipdk-io/networking-recipe/releases)
 * Kubernetes Recipe : [Releases](https://github.com/ipdk-io/k8s-infra-offload/releases)
