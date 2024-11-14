@@ -123,6 +123,23 @@
             <section id="blog" class="blog">
     
       <div class="blog-section">
+        <a class="text-primary" href="../news/2024/11/14/update/"><h2 class="blog-heading text-primary">IPDK Late 2024 Status Update</h2></a>
+        <div class="blog-author">Nov 14, 2024 • Dan Daly</div>
+        <div class="content"><p>We haven’t done a release since early in the year, but we wanted to give an update on the progress we’ve made since then:</p>
+<ul>
+  <li>Combination of Linux Networking and IPsec recipe: Enables running the Linux networking and IPsec Recipes together at the same time, including tunneling and de-tunneling both network virtualization (ie VXLAN) and IPsec headers at the same time on a packet</li>
+  <li>P4 Role Configuration to support multiple control planes simultaneously: Used to support OVS and strongSwan simultaneously</li>
+  <li>Support for LAG LACP (802.3ad) mode in Linux Networking: Capable of active-active LACP</li>
+  <li>Table Defaults: Support for setting and resetting the default action/entry of LEM/SEM/WCM/LPM tables</li>
+  <li>Geneve: Geneve Tunnel Encap/Decap Support in addition to VXLAN</li>
+  <li>Remote traffic mirroring: Mirroring traffic to a remote destination outside of the IPDK target</li>
+  <li>Unit Tests: Expansion of the unit test suite</li>
+  <li>E2100 (Mount Evans) Updates: IPDK Release 24.01 was based on E2100’s 1.2 SDK. IPDK can be used with newer versions of the SDK which brings additional features and bug fixes.</li>
+</ul>
+  <a class="text-primary" href="../news/2024/11/14/update/">Continue...</a></div>
+      </div>
+    
+      <div class="blog-section">
         <a class="text-primary" href="../news/2024/01/17/24-01-Release/"><h2 class="blog-heading text-primary">IPDK 24.01 Release</h2></a>
         <div class="blog-author">Jan 17, 2024 • Dan Daly</div>
         <div class="content"><p>We are delighted to announce the fourth release of IPDK, version 24.01, created to help developers working on Programmable Infrastructure to rapidly port their applications to open source enabled dataplanes running on CPUs, IPUs, DPUs &amp; switches. This release includes:</p>
